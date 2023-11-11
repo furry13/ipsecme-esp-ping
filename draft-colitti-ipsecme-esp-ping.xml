@@ -24,7 +24,7 @@
   version="3">
   <front>
 <title abbrev="esp-ping">ESP Echo Protocol</title>
-    <seriesInfo name="Internet-Draft" value="draft-colitti-esp-ping-00"/>
+    <seriesInfo name="Internet-Draft" value="draft-colitti-esp-ping-01"/>
 
  <author initials="L." surname="Colitti" fullname="Lorenzo Colitti">
       <organization>Google</organization>
@@ -36,8 +36,21 @@
         <email>lorenzo@google.com</email>
       </address>
     </author>
-
-   
+<author fullname="Jen Linkova" initials="J" surname="Linkova">
+      <organization>Google</organization>
+      <address>
+        <postal>
+          <!-- Reorder these if your country does things differently -->
+          <street>1 Darling Island Rd</street>
+          <city>Pyrmont</city>
+          <region>NSW</region>
+          <code>2009</code>
+          <country>AU</country>
+        </postal>        
+        <email>furry13@gmail.com</email>  
+        <email>furry@google.com</email>  
+      </address>
+    </author>
     <date year="2023"/>
 <area>Internet</area>
     <workgroup>IP Security Maintenance and Extensions</workgroup>
