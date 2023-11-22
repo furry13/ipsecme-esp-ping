@@ -1,12 +1,7 @@
-# ANIMA operational considerations for BRSKI Registrar
+# prospective document for IPsecME Working Group
 
-The ANIMA WG Bootstrapping Remote Secure Key Infrastructure (BRSKI)
-protocol involves three parties: Pledge (device), Registrar and
-Manufacturer Authorized Signing Authority (MASA).
+This document defines an ESP echo function which can be used to detect whether a given network path supports IPv6 ESP packets.
 
-This repository contains operational considerations for the Registrar
-function.  It is a candidate document for the ANIMA WG
-http://datatracker.ietf.org/wg/anima 
 
 
 
