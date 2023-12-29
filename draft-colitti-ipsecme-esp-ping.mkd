@@ -6,7 +6,7 @@ docname: draft-colitti-ipsecme-esp-ping-01
 # stand_alone: true
 
 ipr: trust200902
-area: Internet
+area: Security
 wg: IPSECME Working Group
 kw: Internet-Draft
 cat: std
@@ -70,15 +70,29 @@ Operational experience suggests that networks and some home routers that drop ES
 
 # Protocol Specification
 
-An IPv6 node that desires to determine whether the path to a particular destination can support ESP packets can send an ESP Echo Request packet to that destination. ESP Echo Request packets are ESP packets with an SPI value of (7-TBD), a Next Header value of 59 (No Next Header), and no payload.
+The ESP Echo utilizes the standard ESP packet format as described in Section 2 of {{!RFC4303}} with the following changes:
 
-If the destination supports ESP, and wishes to reveal to the sender that it does so, it SHOULD reply with an ESP Echo Reply packet. ESP Echo Reply packets are ESP packets with an SPI value of (8-TBD), a Next Header value of 59, and no payload.
+* The Next Header field of the ESP header SHOULD be set to 59 (No Next Header).
+* No Integrity Check Value-ICV.
+
+An IPsec peer, prior to an IKE negotiation, intending to ascertain the path's capability to support ESP packets to a specific destination, MAY send an ESP Echo Request packet an SPI value set to [ESP-ECHO-REQUEST] to such destination.
+Should the destination support ESP and intend to communicate this capability to the potential IPsec peer, it SHOULD respond with an ESP Echo Reply packet with an SPI value set to [ESP-ECHO-REPLY].
+
+After completing an IPSec negotiation, an IPsec peer wishing to verify the viability of the current network path for ESP packets MAY initiate an ESP Echo Request to its peer.
+The ESP Echo Request packet MAY be encrypted.
+If encrypted, it SHOULD utilize an SPI value previously negotiated through IKE.
+The receiving IPsec peer, having established ESP through IKE, MAY issue an ESP Echo Response.
+When replying to an encrypted ESP Echo Request, the ESP Echo Response MUST be encrypted and MUST utilize the corresponding negotiated SPI.
+
+The sender MAY send ESP Echo packets with zero payload. 
+When responding to an ESP Echo packet, the node SHOULD generate a packet devoid of any payload.
+If the node uses non-zero payload length, the resulting packet size MUST NOT exceed the size of the ESP Echo Request packet received.
 
 # Security Considerations
 
 The security considerations are similar to other unconnected request-reply protocols such as ICMPv6 echo. In particular:
 
-* By sending an ESP Echo Request from a spoofed source address, an attacker could cause a server to send an ESP Echo Reply to that address. This does not constitute an amplification attack because the ESP Echo Reply is the same size as the ESP Echo Request. This can be prevented by implementing ingress filtering per BCP 38 {{?RFC2827}}.
+* By sending an ESP Echo Request from a spoofed source address, an attacker could cause a server to send an ESP Echo Reply to that address. This does not constitute an amplification attack because the ESP Echo Reply never exceeds the size of the ESP Echo Request. This attack can be prevented by implementing ingress filtering per BCP 38 {{?RFC2827}}.
 
 * An attacker can use ESP Echo Request packets to determine whether a particular destination address is an ESP endpoint. This is not a new attack because any endpoint that supports ESP must also reply to IKE INIT packets.
 
@@ -88,8 +102,8 @@ This memo requests that IANA allocate two new values from the "Security Paramete
 
 |Number | Description | Reference |
 :-------|:------------|----------:|
-7-TBD   | ESP Echo Request | THIS DOCUMENT |
-8-TBD   | ESP Echo Reply   | THIS DOCUMENT |
+7-ESP-ECHO-REQUEST   | ESP Echo Request | THIS DOCUMENT |
+8-ESP-ECHO-REPLY   | ESP Echo Reply   | THIS DOCUMENT |
 |===
 
 
