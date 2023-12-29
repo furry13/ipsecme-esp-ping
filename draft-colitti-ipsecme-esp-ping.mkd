@@ -95,7 +95,7 @@ This memo requests that IANA allocate two new values from the "Security Paramete
 
 # Acknowledgements
 
-Thanks to Tero Kivinen, Steffen Klassert, Andrew McGregor, and Paul Wouters for helpful discussion and suggestions.
+Thanks to Antony Antony, Tero Kivinen, Steffen Klassert, Andrew McGregor, Valery Smyslov and Paul Wouters for helpful discussion and suggestions.
 
 # Changelog
 
