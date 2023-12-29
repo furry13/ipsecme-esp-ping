@@ -51,9 +51,9 @@ IPsec sessions between hosts that have global connectivity will by default use u
 
 * They require fewer keepalive packets to keep sessions open.
 
-** On some networks, ESP is be statelessly allowed in both directions, and thus not require any keepalive packets at all. For example, the IPv6 Simple Security recommendations {{!RFC6092}} specify that ESP by default must always be allowed and not be subject to any timeouts.
+   * On some networks, ESP is be statelessly allowed in both directions, and thus not require any keepalive packets at all. For example, the IPv6 Simple Security recommendations {{!RFC6092}} specify that ESP by default must always be allowed and not be subject to any timeouts.
 
-** Even if ESP is not statelessly allowed, experience from real world networks is that timeouts for ESP are higher than for UDP sessions, thus requiring IPsec endpoints to send fewer keepalives.
+   * Even if ESP is not statelessly allowed, experience from real world networks is that timeouts for ESP are higher than for UDP sessions, thus requiring IPsec endpoints to send fewer keepalives.
 
 * They provide slightly lower overhead, due to the absence of the UDP header.
 
