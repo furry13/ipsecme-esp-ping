@@ -10,6 +10,7 @@ area: Internet
 wg: IPSECME Working Group
 kw: Internet-Draft
 cat: std
+updates: 4303
 
 coding: utf-8
 pi:    # can use array (if all yes) or hash here
@@ -47,7 +48,7 @@ This document defines an ESP echo function which can be used to detect whether a
 
 # Problem Statement
 
-IPsec sessions between hosts that have global connectivity will by default use unencapsulated IPv6 ESP, i.e., IPv6 packets with a Next Header value of 50. ESP packets may have advantages over ESP-in-UDP encapsulation, such as:
+IPsec sessions between nodes that have global connectivity will by default use unencapsulated IPv6 ESP, i.e., IPv6 packets with a Next Header value of 50. ESP packets may have advantages over ESP-in-UDP encapsulation, such as:
 
 * They require fewer keepalive packets to keep sessions open.
 
@@ -74,7 +75,73 @@ An IPv6 node that desires to determine whether the path to a particular destinat
 
 If the destination supports ESP, and wishes to reveal to the sender that it does so, it SHOULD reply with an ESP Echo Reply packet. ESP Echo Reply packets are ESP packets with an SPI value of (8-TBD), a Next Header value of 59, and no payload.
 
+The ESP Echo Request and Reply packets utilize the standard ESP packet format as described in Section 2 of {{!RFC4303}} with the following changes:
+
+* SPI set to
+  * [ESP-ECHO-REQUEST] for ESP Echo Request
+  * [ESP-ECHO-REPLY] for ESP Echo Reply
+* The Next Header field of the ESP header SHOULD be set to 59 (No Next Header).
+* No Integrity Check Value-ICV.
+
+The payload has the following format:
+
+     0                   1                   2                   3
+      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |        ECHO Identifier        |      ECHO Sequence Number     |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |     Data ...                                                  |
+     +-+-+-+-+-
+
+
+    * ECHO Identifier: An identifier to aid in matching Echo Replies to Echo Requests. May be zero.
+
+    * ECHO Sequence Number: An identifier to aid in matching Echo Replies to Echo Requests. May be zero.
+
+    * Data: Zero or more octets of arbitrary data.
+
+
+Figure 1: ESP Echo Request and Reply Payload Overview
+
+An IPsec peer, prior to an IKE negotiation or after completing an IPSec negotiation, intending to ascertain the path's capability to support ESP packets to a specific destination, MAY send an ESP Echo Request packet to such destination.
+Should the destination support ESP and intend to communicate this capability to the potential IPsec peer, it SHOULD respond with an ESP Echo Reply packet.
+
+The sender MAY send ESP Echo packets with zero data. 
+When responding to an ESP Echo packet, the node SHOULD generate a packet devoid of any data.
+If the ESP Echo Request packet contain non-zero data, the resulting ESP Echo Reply packet size MUST NOT exceed the size of the ESP Echo Request packet received.
+
+# Discovering ESP Echo Support
+
+If no response is received to an ESP Echo Request packet, it can be caused by one of the following:
+
+* the peer doesn't support ESP Echo protocol.
+* there is no end-to-end ESP connectivity.
+
+Without some prior knowledge about ESP Echo support by the remote side, the sender can not distibguish those two scenarios.
+Therefore the sender SHOULD NOT treat lack of response as an indicator of end-to-end connectivity issues until an explicit confirmation of ESP Echo support by the peer is received. 
+The IPSec peer SHOULD announce ESP Echo support using IKE Notify Payload (more text to be added heve in the next version).
+The sender MAY use any other means of obtaining the information about  ESP Echo support, such as an explicit out-of-band configuration (for example, a VPN client might be configured to always use ESP Echo when communicating to the given VPN server).
+
+# Updates to RFC4303 
+
+Section 2.6 of {{!RFC4303}} discusses "dummy" ESP packets, which are distinguishable by the Next Header value set to 59.
+As per {{!RFC4303}} a receiver MUST be prepared to silently discard "dummy" packets. This document updates Section 2.6 of {{!RFC4303}} to allow packets with the Next Header value of 59 to be processed, if SPI is set to [ESP-ECHO-REQUEST] or [ESP-ECHO-REPLY].
+
+OLD TEXT:
+
+A transmitter MUST be capable of generating dummy packets marked with this value in the next protocol field, and a receiver MUST be prepared to discard such packets, without indicating an error.
+
+NEW TEXT:
+
+A transmitter MUST be capable of generating dummy packets marked with this value in the next protocol field, and a receiver MUST be prepared to discard such packets, without indicating an error.
+A transmitter MUST NOT use the reserved SPI values [ESP-ECHO-REQUEST] or [ESP-ECHO-REPLY] for dummy packets. A receiver SHOULD NOT discard packets with  the Next Header value set of 59, if those packets use the reserved SPI values.
+Packets with the reserved SPI values [ESP-ECHO-REQUEST] or [ESP-ECHO-REPLY] and the Next Header value set of 59 SHOULD be processed by the receiver as described in draft-colitti-ipsecme-esp-ping.
+
+
 # Security Considerations
+
+To prevent a downgrade attack, the IPSec-capable node MUST NOT fall back to unencrypted mode of communication in case of ESP Echo failure.
+The node MAY switch to another path (e.g. via another interface) or another protocol (e.g. IPv4).
 
 The security considerations are similar to other unconnected request-reply protocols such as ICMPv6 echo. In particular:
 
@@ -88,8 +155,8 @@ This memo requests that IANA allocate two new values from the "Security Paramete
 
 |Number | Description | Reference |
 :-------|:------------|----------:|
-7-TBD   | ESP Echo Request | THIS DOCUMENT |
-8-TBD   | ESP Echo Reply   | THIS DOCUMENT |
+7-ESP-ECHO-REQUEST   | ESP Echo Request | THIS DOCUMENT |
+8-ESP-ECHO-REPLY   | ESP Echo Reply | THIS DOCUMENT |
 |===
 
 
@@ -98,7 +165,3 @@ This memo requests that IANA allocate two new values from the "Security Paramete
 Thanks to Tero Kivinen, Steffen Klassert, Andrew McGregor, and Paul Wouters for helpful discussion and suggestions.
 
 # Changelog
-
-
---- back
-
