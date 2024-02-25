@@ -103,7 +103,7 @@ The payload has the following format:
 
 Figure 1: ESP Echo Request and Reply Payload Overview
 
-An IPsec peer, prior to an IKE negotiation or after completing an IPSec negotiation, intending to ascertain the path's capability to support ESP packets to a specific destination, MAY send an ESP Echo Request packet to such destination.
+An IPsec peer, prior to an IKE negotiation or after completing an IPsec negotiation, intending to ascertain the path's capability to support ESP packets to a specific destination, MAY send an ESP Echo Request packet to such destination.
 Should the destination support ESP and intend to communicate this capability to the potential IPsec peer, it SHOULD respond with an ESP Echo Reply packet.
 
 The sender MAY send ESP Echo packets with zero data. 
