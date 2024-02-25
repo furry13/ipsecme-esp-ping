@@ -119,7 +119,7 @@ If no response is received to an ESP Echo Request packet, it can be caused by on
 
 Without some prior knowledge about ESP Echo support by the remote side, the sender can not distibguish those two scenarios.
 Therefore the sender SHOULD NOT treat lack of response as an indicator of end-to-end connectivity issues until an explicit confirmation of ESP Echo support by the peer is received. 
-The IPSec peer SHOULD announce ESP Echo support using IKE Notify Payload (more text to be added heve in the next version).
+The IPsec peer SHOULD announce ESP Echo support using IKE Notify Payload (more text to be added heve in the next version).
 The sender MAY use any other means of obtaining the information about  ESP Echo support, such as an explicit out-of-band configuration (for example, a VPN client might be configured to always use ESP Echo when communicating to the given VPN server).
 
 # Updates to RFC4303 
