@@ -94,9 +94,9 @@ The payload has the following format:
      +-+-+-+-+-
 
 
-    * ECHO Identifier: An identifier to aid in matching Echo Replies to Echo Requests. May be zero.
+    * ECHO Identifier: An identifier to aid in matching Echo Replies to Echo Requests. MAY be zero.
 
-    * ECHO Sequence Number: An identifier to aid in matching Echo Replies to Echo Requests. May be zero.
+    * ECHO Sequence Number: An identifier to aid in matching Echo Replies to Echo Requests. MAY be zero.
 
     * Data: Zero or more octets of arbitrary data.
 
