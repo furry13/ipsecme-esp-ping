@@ -112,8 +112,7 @@ An IPsec peer, prior to an IKE negotiation or after completing an IPsec negotiat
 Should the destination support ESP and intend to communicate this capability to the potential IPsec peer, it SHOULD respond with an ESP Echo Reply packet.
 
 The sender MAY send ESP Echo packets with zero data. 
-When responding to an ESP Echo packet, the node SHOULD generate a packet devoid of any data.
-If the ESP Echo Request packet contain non-zero data, the resulting ESP Echo Reply packet size MUST NOT exceed the size of the ESP Echo Request packet received.
+When responding to an ESP Echo packet, the node MUST copy the data from the ESP Echo packet to the ESP Echo Reply packet, up to the limit of the MTU of the path back to the sender.
 
 # Discovering ESP Echo Support
 
