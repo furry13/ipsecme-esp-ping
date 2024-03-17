@@ -71,9 +71,9 @@ Operational experience suggests that networks and some home routers that drop ES
 
 # Protocol Specification
 
-An IPv6 node that desires to determine whether the path to a particular destination can support ESP packets can send an ESP Echo Request packet to that destination. ESP Echo Request packets are ESP packets with an SPI value of (7-TBD), a Next Header value of 59 (No Next Header), and no payload.
+An IPv6 node that desires to determine whether the path to a particular destination can support ESP packets can send an ESP Echo Request packet to that destination. ESP Echo Request packets are ESP packets with an SPI value of (7-TBD) and a Next Header value of 59 (No Next Header).
 
-If the destination supports ESP, and wishes to reveal to the sender that it does so, it SHOULD reply with an ESP Echo Reply packet. ESP Echo Reply packets are ESP packets with an SPI value of (8-TBD), a Next Header value of 59, and no payload.
+If the destination supports ESP, and wishes to reveal to the sender that it does so, it SHOULD reply with an ESP Echo Reply packet. ESP Echo Reply packets are ESP packets with an SPI value of (8-TBD) and a Next Header value of 59.
 
 The ESP Echo Request and Reply packets utilize the standard ESP packet format as described in Section 2 of {{!RFC4303}} with the following changes:
 
