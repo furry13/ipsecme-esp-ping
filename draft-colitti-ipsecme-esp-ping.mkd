@@ -42,13 +42,13 @@ informative:
 
 --- abstract
 
-This document defines an ESP echo function which can be used to detect whether a given network path supports IPv6 ESP packets.
+This document defines an ESP echo function which can be used to detect whether a given network path supports ESP packets.
 
 --- middle
 
 # Problem Statement
 
-IPsec sessions between nodes that have global connectivity will by default use unencapsulated IPv6 ESP, i.e., IPv6 packets with a Next Header value of 50. ESP packets may have advantages over ESP-in-UDP encapsulation, such as:
+IPsec sessions between nodes that have global connectivity will by default use ESP packets in IPv4 or IPv6 headers without encapsulation. These packets may have advantages over ESP-in-UDP encapsulation, such as:
 
 * They require fewer keepalive packets to keep sessions open.
 
