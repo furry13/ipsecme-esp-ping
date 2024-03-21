@@ -114,16 +114,25 @@ Should the destination support ESP and intend to communicate this capability to 
 The sender MAY send ESP Echo packets with zero data. 
 When responding to an ESP Echo packet, the node MUST copy the data from the ESP Echo packet to the ESP Echo Reply packet, up to the limit of the MTU of the path back to the sender.
 
+# Use cases
+
+A node that wishes to set up an IPsec session to a peer that is known to support this protocol can discover whether the intermediate network will carry ESP packets by sending an ESP Echo Request to the peer. Depending on wether it receives an ESP Echo Reply or not, it could choose to enable encapsulatior, use a different IP protocol, or use a different server or interface.
+
+Network operators can troubleshoot IPsec sessions by sending ESP Echo Request packets from one peer to another to determine if the network between the peers will successfully carry ESP, and if so, what maximum packet size the network is able to support.
+
+ESP Echo Requests can be used as keepalives, to maintain firewall state entries if the network statefully filters ESP between endpoints.
+
 # Discovering ESP Echo Support
 
 If no response is received to an ESP Echo Request packet, it can be caused by one of the following:
 
 * the peer doesn't support ESP Echo protocol.
 * there is no end-to-end ESP connectivity.
+* intermediate nodes allow regular ESP packets, but drop ESP packets that have SPIs in the reserved SPI range.
 
 Without some prior knowledge about ESP Echo support by the remote side, the sender can not distibguish those two scenarios.
-Therefore the sender SHOULD NOT treat lack of response as an indicator of end-to-end connectivity issues until an explicit confirmation of ESP Echo support by the peer is received. 
-The sender MAY use any means of obtaining the information about  ESP Echo support, such as an explicit out-of-band configuration (for example, a VPN client might be configured to always use ESP Echo when communicating to the given VPN server).
+Therefore the sender SHOULD NOT treat lack of response as an indicator of end-to-end connectivity issues until an explicit confirmation of ESP Echo support by the peer is received. Because ESP might still work even if intermediate nodes drop ESP Echo Request or ESP Echo Reply packets, senders SHOULD still attempt to use ESP if no alternative paths or protocols (e.g., UDP encapsulation) are available.
+The sender MAY use any means of obtaining the information about ESP Echo support, such as an explicit out-of-band configuration (for example, a VPN client might be configured to always use ESP Echo when communicating to the given VPN server).
 
 # Updates to RFC4303 
 
@@ -143,8 +152,9 @@ Packets with the reserved SPI values [ESP-ECHO-REQUEST] or [ESP-ECHO-REPLY] and 
 
 # Security Considerations
 
-To prevent a downgrade attack, the IPSec-capable node MUST NOT fall back to unencrypted mode of communication in case of ESP Echo failure.
-The node MAY switch to another path (e.g. via another interface) or another protocol (e.g. IPv4 UDP encapsulation).
+If an IPsec sender uses ESP Echo Request packets to determine whether the path supports ESP, an intermediate node may drop ESP Echo packets to make the sender believe that the path does not support ESP even though it does. To prevent such downgrade attacks, IPSec nodes MUST NOT fall back to unencrypted mode of communication in case of ESP Echo failure. The node MAY switch to another path (e.g. via another interface) or another protocol (e.g. IPv4).
+
+Intermediate nodes can can forge ESP Echo Reply packets to cause the sender to believe that the network supports ESP even though it doesn't. This may result in ESP packets being blackholed and ESP sessions being unable to transmit or receive data. Intermediate nodes can achieve the same effect by allowing ESP packets with an SPI of 7 or 8, but dropping packets with any other SPI value. This failure mode already exists today, because intermediate networks can always choose to drop ESP packets.
 
 The security considerations are similar to other unconnected request-reply protocols such as ICMPv6 echo. In particular:
 
