@@ -42,13 +42,13 @@ informative:
 
 --- abstract
 
-This document defines an ESP echo function which can be used to detect whether a given network path supports IPv6 ESP packets.
+This document defines an ESP echo function which can be used to detect whether a given network path supports ESP packets.
 
 --- middle
 
 # Problem Statement
 
-IPsec sessions between nodes that have global connectivity will by default use unencapsulated IPv6 ESP, i.e., IPv6 packets with a Next Header value of 50. ESP packets may have advantages over ESP-in-UDP encapsulation, such as:
+IPsec sessions between nodes that have global connectivity will by default use ESP packets in IPv4 or IPv6 headers without encapsulation. These packets may have advantages over ESP-in-UDP encapsulation, such as:
 
 * They require fewer keepalive packets to keep sessions open.
 
@@ -144,7 +144,7 @@ Packets with the reserved SPI values [ESP-ECHO-REQUEST] or [ESP-ECHO-REPLY] and 
 # Security Considerations
 
 To prevent a downgrade attack, the IPSec-capable node MUST NOT fall back to unencrypted mode of communication in case of ESP Echo failure.
-The node MAY switch to another path (e.g. via another interface) or another protocol (e.g. IPv4).
+The node MAY switch to another path (e.g. via another interface) or another protocol (e.g. IPv4 UDP encapsulation).
 
 The security considerations are similar to other unconnected request-reply protocols such as ICMPv6 echo. In particular:
 
