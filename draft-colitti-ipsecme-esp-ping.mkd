@@ -1,7 +1,7 @@
 ---
 title: ESP Echo Protocol
 abbrev: ESP-PING
-docname: draft-colitti-ipsecme-esp-ping-01
+docname: draft-colitti-ipsecme-esp-ping-02
 
 # stand_alone: true
 
@@ -175,6 +175,6 @@ This memo requests that IANA allocate two new values from the "Security Paramete
 
 # Acknowledgements
 
-Thanks to Tero Kivinen, Steffen Klassert, Andrew McGregor, and Paul Wouters for helpful discussion and suggestions.
+Thanks to Tero Kivinen, Steffen Klassert, Andrew McGregor, Valery Smyslov and Paul Wouters for helpful discussion and suggestions.
 
 # Changelog
