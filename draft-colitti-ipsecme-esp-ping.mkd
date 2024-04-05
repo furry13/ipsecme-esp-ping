@@ -111,7 +111,7 @@ Figure 1: ESP Echo Request and Reply Payload Overview
 An IPsec peer, prior to an IKE negotiation or after completing an IPsec negotiation, intending to ascertain the path's capability to support ESP packets to a specific destination, MAY send one or more ESP Echo Request packet(s) to the destination.
 Should the destination support ESP and intend to communicate this capability to the potential IPsec peer, it SHOULD respond with an ESP Echo Reply packet.
 
-The sender MAY send ESP Echo packets with zero data. 
+The sender MAY send ESP Echo packets with zero data.
 When responding to an ESP Echo packet, the node MUST copy the data from the ESP Echo packet to the ESP Echo Reply packet, up to the limit of the MTU of the path back to the sender.
 
 # Use cases
@@ -134,7 +134,7 @@ Without some prior knowledge about ESP Echo support by the remote side, the send
 Therefore the sender SHOULD NOT treat lack of response as an indicator of end-to-end connectivity issues until an explicit confirmation of ESP Echo support by the peer is received. Because ESP might still work even if intermediate nodes drop ESP Echo Request or ESP Echo Reply packets, senders SHOULD still attempt to use ESP if no alternative paths or protocols (e.g., UDP encapsulation) are available.
 The sender MAY use any means of obtaining the information about ESP Echo support, such as an explicit out-of-band configuration (for example, a VPN client might be configured to always use ESP Echo when communicating to the given VPN server).
 
-# Updates to RFC4303 
+# Updates to RFC4303
 
 Section 2.6 of {{!RFC4303}} discusses "dummy" ESP packets, which are distinguishable by the Next Header value set to 59.
 As per {{!RFC4303}} a receiver MUST be prepared to silently discard "dummy" packets. This document updates Section 2.6 of {{!RFC4303}} to allow packets with the Next Header value of 59 to be processed, if SPI is set to [ESP-ECHO-REQUEST] or [ESP-ECHO-REPLY].
@@ -152,7 +152,7 @@ Packets with the reserved SPI values [ESP-ECHO-REQUEST] or [ESP-ECHO-REPLY] and 
 
 # Security Considerations
 
-If an IPsec sender uses ESP Echo Request packets to determine whether the path supports ESP, an intermediate node may drop ESP Echo packets to make the sender believe that the path does not support ESP even though it does. To prevent such downgrade attacks, IPSec nodes MUST NOT fall back to unencrypted mode of communication in case of ESP Echo failure. The node MAY switch to another path (e.g. via another interface) or another protocol (e.g. IPv4).
+If an IPsec sender uses ESP Echo Request packets to determine whether the path supports ESP, an intermediate node may drop ESP Echo packets to make the sender believe that the path does not support ESP even though it does. To prevent such downgrade attacks, IPsec nodes MUST NOT fall back to unencrypted mode of communication in case of ESP Echo failure. The node MAY switch to another path (e.g. via another interface) or another protocol (e.g. IPv4).
 
 Intermediate nodes can can forge ESP Echo Reply packets to cause the sender to believe that the network supports ESP even though it doesn't. This may result in ESP packets being blackholed and ESP sessions being unable to transmit or receive data. Intermediate nodes can achieve the same effect by allowing ESP packets with an SPI of 7 or 8, but dropping packets with any other SPI value. This failure mode already exists today, because intermediate networks can always choose to drop ESP packets.
 
