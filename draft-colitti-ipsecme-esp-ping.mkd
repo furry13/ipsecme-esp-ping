@@ -1,7 +1,7 @@
 ---
 title: ESP Echo Protocol
 abbrev: ESP-PING
-docname: draft-colitti-ipsecme-esp-ping-02
+docname: draft-colitti-ipsecme-esp-ping-03
 
 # stand_alone: true
 
@@ -117,6 +117,8 @@ When responding to an ESP Echo packet, the node MUST copy the data from the ESP 
 # Use cases
 
 A node that wishes to set up an IPsec session to a peer that is known to support this protocol can discover whether the intermediate network will carry ESP packets by sending an ESP Echo Request to the peer. Depending on wether it receives an ESP Echo Reply or not, it could choose to enable encapsulatior, use a different IP protocol, or use a different server or interface.
+In particular, if MOBIKE {{RFC4555}} is used, a node can use ESP Echo Request packets to verify reachability before switching to a bnew address.
+
 
 Network operators can troubleshoot IPsec sessions by sending ESP Echo Request packets from one peer to another to determine if the network between the peers will successfully carry ESP, and if so, what maximum packet size the network is able to support.
 
