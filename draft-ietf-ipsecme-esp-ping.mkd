@@ -1,7 +1,7 @@
 ---
 title: ESP Echo Protocol
 abbrev: ESP-PING
-docname: draft-colitti-ipsecme-esp-ping-03
+docname: draft-ietf-ipsecme-esp-ping-00
 
 # stand_alone: true
 

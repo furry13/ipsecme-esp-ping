@@ -1,4 +1,4 @@
-DRAFT:=draft-colitti-ipsecme-esp-ping
+DRAFT:=draft-ietf-ipsecme-esp-ping
 VERSION:=$(shell ./getver ${DRAFT}.mkd )
 EXAMPLES=
 
