@@ -83,8 +83,8 @@ ESP Echo Reply packets are ESP packets with an SPI value of (8-TBD) and a Next H
 The ESP Echo Request and Reply packets utilize the standard ESP packet format as described in Section 2 of {{!RFC4303}} with the following changes:
 
 * SPI set to
-  * [ESP-ECHO-REQUEST] for ESP Echo Request
-  * [ESP-ECHO-REPLY] for ESP Echo Reply
+  * _ESP-ECHO-REQUEST_ for ESP Echo Request
+  * _ESP-ECHO-REPLY_ for ESP Echo Reply
 * The Next Header field of the ESP header SHOULD be set to 59 (No Next Header).
 * No Integrity Check Value-ICV.
 
@@ -156,7 +156,7 @@ The sender MAY use any means of obtaining the information about ESP Echo support
 # Updates to RFC4303
 
 Section 2.6 of {{!RFC4303}} discusses "dummy" ESP packets, which are distinguishable by the Next Header value set to 59.
-As per {{!RFC4303}} a receiver MUST be prepared to silently discard "dummy" packets. This document updates Section 2.6 of {{!RFC4303}} to allow packets with the Next Header value of 59 to be processed, if SPI is set to [ESP-ECHO-REQUEST] or [ESP-ECHO-REPLY].
+As per {{!RFC4303}} a receiver MUST be prepared to silently discard "dummy" packets. This document updates Section 2.6 of {{!RFC4303}} to allow packets with the Next Header value of 59 to be processed, if SPI is set to _ESP-ECHO-REQUEST_ or _ESP-ECHO-REPLY_.
 
 OLD TEXT:
 
