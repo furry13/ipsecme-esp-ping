@@ -29,7 +29,6 @@ author:
   name: Jen Linkova
   org: Google
   email: furry@google.com
-  email: furry13@gmail.com
 
 - ins: M. Richardson
   name: Michael Richardson
@@ -49,7 +48,7 @@ This document defines an IPsec ESP echo function which can be used to detect whe
 # Problem Statement
 
 IPsec sessions between nodes that have global connectivity will by default use IP protocol 51, known as ESP packets in IPv4 or IPv6 headers without encapsulation.
-On many other paths where NAT44 {{-RFC4787}} is involved, then the ESP packets will be encapsulated in UDP.
+On many other paths where NAT44 {{?RFC4787}} is involved, then the ESP packets will be encapsulated in UDP.
 
 ESP packets may have advantages over ESP-in-UDP encapsulation, such as:
 
